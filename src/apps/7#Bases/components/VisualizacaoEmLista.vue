@@ -30,13 +30,22 @@
             </td>
             <td @click="abre_modal_view_base(item)">{{ item.nome.pt }}</td>
             <td @click="abre_modal_view_base(item)">
-              {{ $moment(item.updated_at).format('DD/MM/YY [às] HH:mm') }}
+              {{ $moment(item.updated_at).format("DD/MM/YY [às] HH:mm") }}
+            </td>
+            <td>
+              <a
+                class="link white--text"
+                :href="`http://200.129.165.106/#/?b=${item.link}`"
+                >{{ item.link }}
+                <v-icon color="white" size="15">mdi-open-in-new</v-icon>
+              </a>
             </td>
             <td style="width: 10px">
               <v-btn
                 @click="
                   createConfirmAction({
-                    message: 'Deseja remover esta base, essa ação é irreversível?',
+                    message:
+                      'Deseja remover esta base, essa ação é irreversível?',
                     icon: 'mdi-warning',
                     action: 'excluir_base',
                     action_value: item
@@ -68,3 +77,13 @@ export default {
   }
 };
 </script>
+
+<style>
+.link {
+  text-decoration: none;
+  background: green;
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+}
+</style>

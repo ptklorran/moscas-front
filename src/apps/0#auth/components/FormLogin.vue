@@ -10,8 +10,8 @@
 
     <v-flex xs12 md10>
       <v-text-field
-        label="ex: email@gmail.com"
-        prefix="Emal:"
+        label="ex: controle"
+        prefix="Usuário:"
         :color="$theme.primary"
         solo
         flat

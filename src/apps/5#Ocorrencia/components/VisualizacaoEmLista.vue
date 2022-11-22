@@ -27,7 +27,7 @@
               v-if="!hideDelete"
               style="width: 10px"
               @click="abre_modal_view_ocorrencia(item)"
-              class="font-weight-bold"
+              class="font-weight-bold fonte"
             >
               {{ item.id_ocorrencia }}
             </td>
@@ -37,14 +37,27 @@
             <td @click="abre_modal_view_ocorrencia(item)">
               {{ item.hospedeiro.nome }}
             </td>
-            <td @click="abre_modal_view_ocorrencia(item)">
+            <td @click="goToCord(item)">
               Lat {{ item.latitude }}, Long {{ item.longitude }}
             </td>
             <td @click="abre_modal_view_ocorrencia(item)">
               {{ item.municipio }} - {{ item.estado }}
             </td>
-            <td @click="abre_modal_view_ocorrencia(item)">
-              {{ item.referenciabibliografica }}
+            <td @click="copyRef(item)">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    class="fonte text-capitalize"
+                    small
+                    rounded
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Clique para copiar
+                  </v-btn>
+                </template>
+                <span> {{ item.referenciabibliografica }}</span>
+              </v-tooltip>
             </td>
             <td v-if="!hideDelete" style="width: 10px">
               <v-btn
@@ -64,21 +77,47 @@
         </tbody>
       </template>
     </v-simple-table>
+    <div id="toCopy"></div>
   </v-flex>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  props: ["hideDelete"],
+  props: ["hideDelete", "goToCord"],
+  data() {
+    return {
+      toCopy: ""
+    };
+  },
   computed: {
     ...mapGetters(["get_ocorrencias"])
   },
   methods: {
-    ...mapActions(["abre_modal_view_ocorrencia", "createConfirmAction"]),
-    setMarcado(event, item) {
+    ...mapActions([
+      "createGlobalMessage",
+      "abre_modal_view_ocorrencia",
+      "createConfirmAction"
+    ]),
+    setMarcado(event) {
       console.log("event", event);
       // this.add_ocorrencia_marcado(item)
+    },
+    copyRef(register) {
+      let el = document.createElement("textarea");
+      el.value = register.referenciabibliografica;
+      document.getElementById("toCopy").appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.getElementById("toCopy").removeChild(el);
+      this.createGlobalMessage({
+        opened: false,
+        icon: "mdi-check-circle-outline",
+        type: "success",
+        message: "Referência bibliográfica copiada com sucesso!",
+        timeout: 3000,
+        submessage: "Pressione Ctrl + V para colar"
+      });
     }
   }
 };

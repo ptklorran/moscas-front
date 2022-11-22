@@ -2,8 +2,8 @@
   <div class="expande-horizontal wrap">
     <v-flex xs12>
       <div class="expande-horizontal centraliza">
-        <img @click="selectLang('en')" :class="{ unselectedImg: base_lang !== 'en' }" style="padding: 6px; border-radius: 13px; cursor: pointer;" width="80" height="50" src="img/eua1.jpg" alt="eua">
-        <img @click="selectLang('pt')" :class="{ unselectedImg: base_lang !== 'pt' }" style="padding: 6px; border-radius: 13px; cursor: pointer;" width="80" height="50" src="img/br.jpg" alt="br">
+        <img @click="selectLang('en')" :class="{ unselectedImg: base_lang !== 'en' }" style="padding: 6px; border-radius: 13px; cursor: pointer;" width="60" height="40" src="img/eua1.jpg" alt="eua">
+        <img @click="selectLang('pt')" :class="{ unselectedImg: base_lang !== 'pt' }" style="padding: 6px; border-radius: 13px; cursor: pointer;" width="60" height="40" src="img/br.jpg" alt="br">
       </div>
     </v-flex>
 	<v-flex xs12>
@@ -11,12 +11,12 @@
 				<v-flex xs12 >
 					<div class="expande-horizontal wrap">
             <v-flex xs12 md4>
-              <img class="mr-6" height="80" src="http://anastrepha.cpafap.embrapa.br/imagens/logotipo_en_pqno.gif" style="border-radius: 9px;"></img>
+              <img class="mr-6" height="80" src="img/logo_anastrepha.gif" style="border-radius: 9px;"></img>
             </v-flex>
             <v-flex xs12 md8>
-              <div class="column wrap expande-horizontal">
+              <div class="column pt-6 wrap expande-horizontal">
                 <v-flex xs12>
-                  <h1 style="font-size: 40px; min-width: 600px; width: 100% !important;" class="green--text expande-horizontal">{{ get_base.nome[base_lang] }}</h1>
+                  <h1 style="font-size: 30px; min-width: 600px; width: 100% !important;" class="green--text expande-horizontal">{{ get_base.nome[base_lang] }}</h1>
                 </v-flex>
                 <h3 class="green--text">{{ get_base.subtitulo[base_lang] }}</h3>
               </div>
@@ -36,7 +36,7 @@
           <v-divider class="mb-6"></v-divider>
         </v-flex>
       </div>
-      <v-flex xs12>
+      <v-flex v-if="show === 'search'" xs12>
         <div class="expande-horizontal centraliza wrap">
           <v-flex xs12 md8>
             <div class="expande-horizontal wrap">
@@ -47,6 +47,7 @@
                   </span>
                   <span class="fonte fonte-mini font-weight-bold">{{ get_base.link }}</span>
                   <v-autocomplete
+                    v-model="filter.especie"
                     :prefix="base_lang === 'pt' ? 'Espécie:' : 'Species:'"
                     dense
                     solo
@@ -65,6 +66,10 @@
                     dense
                     solo
                     flat
+                    :items="get_familiahospedeiros.docs"
+                    item-text="nome"
+                    item-value="nome"
+                    v-model="filter.familiahospedeiro"
                     background-color="#f2f2f2"
                     color="green"
                   >
@@ -74,6 +79,10 @@
                     :prefix="base_lang === 'pt' ? 'Nome Científico:' : 'Scientific Name:'"
                     dense
                     solo
+                    :items="get_hospedeiros.docs"
+                    item-text="nome"
+                    item-value="nome"
+                    v-model="filter.nomecientifico"
                     flat
                     background-color="#f2f2f2"
                     color="green"
@@ -87,6 +96,10 @@
                         :prefix="base_lang === 'pt' ? 'Estado:' : 'State:'"
                         dense
                         solo
+                        v-model="filter.estado"
+                        :items="get_states"
+                        item-value="estado"
+                        item-text="estado"
                         flat
                         background-color="#f2f2f2"
                         color="green"
@@ -98,8 +111,13 @@
                       <v-autocomplete
                         :prefix="base_lang === 'pt' ? 'Município:' : 'City:'"
                         dense
+                        v-model="filter.municipio"
+                        :items="get_cities"
+                        item-value="municipio"
+                        item-text="municipio"
                         solo
                         flat
+                        class="text-capitalize"
                         background-color="#f2f2f2"
                         color="green"
                       >
@@ -109,7 +127,7 @@
                   </div>
                   <div class="expande-horizontal pb-2">
                     <v-flex xs6>
-                      <v-btn dark class="fonte font-weight-bold" color="green" small outlined> {{ base_lang === 'pt' ? 'Buscar' : 'Search' }} <v-icon size="18" class="mt-1 ml-2">mdi-magnify</v-icon> </v-btn>
+                      <v-btn @click="show='view'" dark class="fonte font-weight-bold" color="green" small outlined> {{ base_lang === 'pt' ? 'Buscar' : 'Search' }} <v-icon size="18" class="mt-1 ml-2">mdi-magnify</v-icon> </v-btn>
                     </v-flex>
                   </div>
                   <div class="expande-horizontal centraliza">
@@ -126,6 +144,53 @@
             </div>
           </v-flex>
         </div>
+      </v-flex>
+      <v-flex v-if="show === 'view'" xs12>
+        <div class="fonte pa-1 expande-horizontal">
+          <v-btn class="mr-6" @click="show='search'" rounded small>
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          Zoom:
+          <v-btn class="mx-3 mt-1" @click="zoom--" text x-small>
+            <v-icon>mdi-minus</v-icon>
+          </v-btn>
+          <v-btn class="mt-1" @click="zoom++" text x-small>
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </div>
+        <div style="display: flex; height: 50vh">
+          <MglMap :interactive="true" :zoom="zoom" :showZoom="true" :center="center" style="background-color: #555" :accessToken="accessToken" :mapStyle.sync="mapStyle">
+              <div v-for="item in get_ocorrencias.docs" :key="item._id">
+                  <MglMarker :coordinates="[parseFloat(item.longitude || 0), parseFloat(item.latitude || 0)]" color="#F9A825">
+                      <MglPopup showed :coordinates="[parseFloat(item.longitude || 0), parseFloat(item.latitude || 0)]" anchor="top">
+                          <div class="bg">
+                              <div class="expande-horizontal">
+                                <v-flex xs3>
+                                  <v-avatar size="30" class="mr-2" color="green">
+                                    <v-icon color="white">mdi-bug</v-icon>
+                                  </v-avatar>
+                                </v-flex>
+                                <v-flex class="fonte" xs10>
+                                  <strong class="font-weight-bold">Espécie: </strong>
+                                  <span>{{item.especie.nome}}</span>
+                                </v-flex>
+                              </div>
+                          </div>
+                      </MglPopup>
+                  </MglMarker>
+              </div>
+          </MglMap>
+        </div>
+			<div class="expande-horizontal wrap" style="height: 70vh;">
+				<div class="expande-horizontal wrap">
+          <VisualizacaoEmLista :goToCord="goToCord" :hideDelete="true" v-show="get_ocorrencias.docs.length > 0" />
+        </div>
+
+        <ListagemVazia v-show="get_ocorrencias.docs.length === 0" />
+        <div class="expande-horizontal centraliza">
+          <Paginacao />
+        </div>
+			</div>
       </v-flex>
       <div class="expande-horizontal centraliza">
         <v-flex xs8>
@@ -150,44 +215,11 @@
           </div>
         </v-flex>
       </div>
-      <!-- <OcorrenciasFiltros /> -->
-      <!-- <div style="display: flex; height: 50vh">
-          <MglMap :zoom="3" :center="center" style="background-color: #555" :accessToken="accessToken" :mapStyle.sync="mapStyle">
-              <div v-for="item in get_ocorrencias.docs" :key="item._id">
-                  <MglMarker :coordinates="[parseFloat(item.longitude || 0), parseFloat(item.latitude || 0)]" color="#F9A825">
-                      <MglPopup showed :coordinates="[parseFloat(item.longitude || 0), parseFloat(item.latitude || 0)]" anchor="top">
-                          <div class="bg">
-                              <div class="expande-horizontal">
-                                <v-flex xs3>
-                                  <v-avatar class="mr-2" color="green">
-                                    <v-icon color="white">mdi-bug</v-icon>
-                                  </v-avatar>
-                                </v-flex>
-                                <v-flex class="fonte" xs10>
-                                  <strong class="font-weight-bold">Espécie: </strong>
-                                  <span>{{item.especie.nome}}</span>
-                                </v-flex>
-                              </div>
-                          </div>
-                      </MglPopup>
-                  </MglMarker>
-              </div>
-          </MglMap>
-        </div> -->
-			<!-- <div class="expande-horizontal wrap" style="height: 70vh;">
-				<div class="expande-horizontal wrap">
-          <VisualizacaoEmLista :hideDelete="true" v-show="get_ocorrencias.docs.length > 0" />
-        </div>
-
-        <ListagemVazia v-show="get_ocorrencias.docs.length === 0" />
-        <div class="expande-horizontal centraliza">
-          <Paginacao />
-        </div>
-			</div> -->
 		</v-flex>
     <v-dialog
       v-model="splash"
       fullscreen
+      transition="slide-x-transition"
       absolute
     >
       <v-card color="white" class="expande-horizontal column centraliza" style="height: 100vh;">
@@ -286,21 +318,77 @@ export default {
       "get_especies",
       "get_hospedeiros",
       "get_familiahospedeiros",
-    ])
+    ]),
+    FilteredOcurrencies() {
+      let Ocurrencies = [];
+      this.get_ocorrencias.docs.map(ocurrencie => {
+
+        // if (this.filter.especie) {
+        //   if (
+        //     ocurrencie.especie.nome.toLowerCase().includes()
+        //   ) {
+        //     Ocurrencies.push(ocurrencie);
+        //   }
+        // } else if (
+
+        // )
+
+        product.preco_multiplo.map(preco => {
+          if (preco.disponivel) {
+            if (
+              preco.nome.toLowerCase().includes(this.inputSearch.toLowerCase())
+            ) {
+              this.productSearchList.push(preco);
+            } else if (
+              product.code &&
+              product.code
+                .toLowerCase()
+                .indexOf(this.inputSearch.toLowerCase()) > -1
+            )
+              return true;
+          }
+        });
+      });
+      return Ocurrencies
+    },
+    get_states() {
+      let states = [];
+      this.get_ocorrencias.docs.map(oco => {
+        const haveState = states.filter(i => i.estado === oco.estado)
+        if (haveState.length === 0) {
+          states.push(oco)
+        }
+      });
+      return states;
+    },
+    get_cities() {
+      let cities = [];
+      this.get_ocorrencias.docs.map(oco => {
+        const haveCity = cities.filter(i => i.municipio === oco.municipio)
+        if (haveCity.length === 0) {
+          cities.push(oco)
+        }
+      });
+      return cities;
+    }
   },
   data() {
         return {
+            show: "search",
             autores_modal: false,
             splash: true,
             base_lang: 'pt',
             accessToken: 'pk.eyJ1IjoicHRrbG9ycmFuIiwiYSI6ImNrM2JzbXRqZTBnZjkzbnFlM3VyYTVzazkifQ.kgDrdfqGfd6XTV5DXfeSwg', // your access token. Needed if you using Mapbox maps
-            mapStyle:  'mapbox://styles/mapbox/light-v10', // your map style
+            mapStyle:  'mapbox://styles/mapbox/satellite-streets-v12', // your map style
+            // mapStyle:  'mapbox://styles/mapbox/light-v10', // your map style
             pesquisa: '',
             options: [],
             mapbox: Mapbox,
             coordinates: [],
             locations: [],
-            center: [-50.50, -20]
+            center: [-50.50, -20],
+            zoom: 14,
+            filter: {}
         }
     },
   methods: {
@@ -308,11 +396,14 @@ export default {
       'listar_ocorrencias',
       'listar_hospedeiros',
       'listar_familiahospedeiros',
-      'listar_bases'
+      'listar_bases',
     ]),
     selectLang(lang) {
       this.base_lang = lang
     },
+    goToCord(item) {
+      this.center = [item.longitude, item.latitude]
+    }
   },
   components: {
     OcorrenciasFiltros,
@@ -324,7 +415,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.splash = false;
-    }, 4000);
+    }, 1000);
   },
   created() {
     this.listar_bases(this.$route.query.b);

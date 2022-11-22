@@ -6,20 +6,27 @@
     transition="slide-x-transition"
     top
     dark
-    color="#f2f2f2"
   >
     <div class="expande-horizontal centraliza">
-        <v-avatar
-          size="27"
-          class="elevation-1 mr-3"
-          :color="getColorByType(getModalGlobalMessage.type)"
-        >
-          <v-icon color="black" size="18"> {{ getModalGlobalMessage.type === 'success' ? 'mdi-check' : 'mdi-alert' }} </v-icon>
-        </v-avatar>
-
-        <span class="fonte black--text">
-          {{ getModalGlobalMessage.message }}
-        </span>
+      <v-avatar
+        size="27"
+        class="elevation-1 mr-3"
+        :color="getColorByType(getModalGlobalMessage.type)"
+      >
+        <v-icon size="18">
+          {{ getModalGlobalMessage.icon }}
+        </v-icon>
+      </v-avatar>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="fonte white--text font-weight-bold">
+            {{ getModalGlobalMessage.message }}
+          </v-list-item-title>
+          <v-list-item-subtitle class="fonte">
+            {{ getModalGlobalMessage.submessage }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
     </div>
 
     <!-- <template v-slot:action="{ attrs }">
@@ -45,7 +52,7 @@ export default {
     ...mapActions(["desativaMensagemGlobal"]),
     getColorByType(type) {
       const types = {
-        success: "#AEEA00",
+        success: "#4CAF50",
         warning: "#FFD600",
         error: "#D50000"
       };

@@ -27,9 +27,8 @@ const theme = {
   background_drawer_color: "",
   appbar_color: "",
   gradient_menu_choise: "",
-  logo: "http://anastrepha.cpafap.embrapa.br/imagens/logotipo_en_pqno.gif",
-  logo_branca:
-    "https://firebasestorage.googleapis.com/v0/b/solaris-admin.appspot.com/o/solaris.png?alt=media&token=4b7c7345-dca8-475e-bed2-6d029fc6e693",
+  logo: "img/logo_anastrepha.gif",
+  logo_branca: "",
   // logo: 'https://firebase|storage.googleapis.com/v0/b/cosmos-home-site.appspot.com/o/5.png?alt=media&token=2a907ebf-0020-459e-8469-c3fddf254e8d',
   token_img: ""
 };
