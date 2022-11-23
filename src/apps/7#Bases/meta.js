@@ -17,19 +17,26 @@ const module = {
   actions: {
     listar_bases: ({ commit, dispatch, getters }, payload) => {
       dispatch("enableLoading");
-      localStorage.link_base = payload || "2";
-      console.log("payload", payload);
+      if (payload) {
+        localStorage.link_base = payload;
+      }
       service
         .listar(getters.get_bases_filtros)
         .then(res => {
           if (payload) {
-            console.log("res.data.docs", res.data.docs);
             res.data.docs.map(base => {
               const base_link = base.link || "no";
-              if (base_link.toLowerCase() === payload.toLowerCase()) {
-                localStorage.base = base._id;
-                localStorage.base_body = JSON.stringify(base);
-                commit("set_base", base);
+              if (payload) {
+                if (base_link.toLowerCase() === payload.toLowerCase()) {
+                  localStorage.base = base._id;
+                  localStorage.base_body = JSON.stringify(base);
+                  commit("set_base", base);
+                  dispatch("listar_ocorrencias");
+                  dispatch("listar_especies");
+                  dispatch("listar_familiahospedeiros");
+                  dispatch("listar_hospedeiros");
+                }
+              } else {
                 dispatch("listar_ocorrencias");
                 dispatch("listar_especies");
                 dispatch("listar_familiahospedeiros");
@@ -192,7 +199,20 @@ const module = {
     }
   },
   state: {
-    base: {},
+    base: {
+      nome: {
+        pt: "",
+        en: ""
+      },
+      subtitulo: {
+        pt: "",
+        en: ""
+      },
+      descricao: {
+        pt: "",
+        en: ""
+      }
+    },
     bases: {
       docs: []
     },
