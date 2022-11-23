@@ -34,6 +34,7 @@
             </td>
             <td>
               <a
+                target="_blank"
                 class="link white--text"
                 :href="`http://200.129.165.106/#/?b=${item.link}`"
                 >{{ item.link }}
