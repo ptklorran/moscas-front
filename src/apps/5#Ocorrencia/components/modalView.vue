@@ -30,8 +30,19 @@
           </v-flex> -->
           <v-form ref="form">
             <v-flex class="px-3" xs12>
-              <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
+              <span class="py-3 mb-1 fonte" :style="`color: ${$theme.primary}`">
                 Espécie
+                <v-btn
+                  @click="abre_modal_view_especie"
+                  rounded
+                  dark
+                  class="mb-1 font-weight-bold fonte"
+                  x-small
+                  color="green"
+                >
+                  Cadastrar
+                  <v-icon size="15" class="ml-1">mdi-plus-circle-outline</v-icon>
+                </v-btn>
               </span>
               <v-autocomplete
                 v-model="get_ocorrencia.especie"
@@ -52,6 +63,17 @@
             <v-flex class="px-3" xs12>
               <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
                 Hospedeiro
+                <v-btn
+                  @click="abre_modal_view_hospedeiro"
+                  rounded
+                  dark
+                  class="mb-1 font-weight-bold fonte"
+                  x-small
+                  color="green"
+                >
+                  Cadastrar
+                  <v-icon size="15" class="ml-1">mdi-plus-circle-outline</v-icon>
+                </v-btn>
               </span>
               <v-autocomplete
                 v-model="get_ocorrencia.hospedeiro"
@@ -183,14 +205,17 @@
         </v-btn>
       </div>
     </v-card>
+    <ModalViewEspecie />
+    <ModalViewHospedeiro />
   </v-dialog>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import ModalSendArchive from "../../shared/components/ModalSendArchive.vue";
+import ModalViewEspecie from "@/apps/0#Especies/components/modalView";
+import ModalViewHospedeiro from "@/apps/3#Hospedeiro/components/modalView";
 export default {
-  components: { ModalSendArchive },
+  components: { ModalViewEspecie, ModalViewHospedeiro },
   computed: {
     ...mapGetters([
       "get_ocorrencia",
@@ -208,7 +233,9 @@ export default {
       "atualizar_ocorrencia",
       "listar_hospedeiros",
       "listar_especies",
-      "fecha_modal_view_ocorrencia"
+      "fecha_modal_view_ocorrencia",
+      "abre_modal_view_especie",
+      "abre_modal_view_hospedeiro",
     ]),
     valida_form() {
       if (this.$refs.form.validate()) {

@@ -68,7 +68,9 @@ const module = {
             message: "Registro Concluído!",
             timeout: 6000
           });
-          dispatch("listar_hospedeiros");
+          setTimeout(() => {
+            dispatch("listar_hospedeiros");
+          }, 1000);
           commit("set_modal_view_hospedeiro", false);
         })
         .catch(e => {
@@ -129,6 +131,8 @@ const module = {
         commit("set_hospedeiro", payload);
         commit("setLinks", payload.imagens);
       }
+      dispatch("listar_especies_hospedeiros");
+      dispatch("listar_familiahospedeiros");
       commit("set_modal_view_hospedeiro", true);
     },
     fecha_modal_view_hospedeiro: ({ commit }) => {

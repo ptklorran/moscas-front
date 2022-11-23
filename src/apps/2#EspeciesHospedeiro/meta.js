@@ -24,6 +24,7 @@ const module = {
         })
         .then(res => {
           dispatch("disableLoading");
+          commit("set_especies_hospedeiros", []);
           commit("set_especies_hospedeiros", res.data);
         })
         .catch(e => {
@@ -41,13 +42,13 @@ const module = {
         .atualizar({ ...getters.get_especie })
         .then(res => {
           dispatch("disableLoading");
+          dispatch("listar_especies_hospedeiros");
           commit("set_especie_hospedeiro", res.data);
           dispatch("createGlobalMessage", {
             type: "success",
             message: "Atualização Concluída!",
             timeout: 6000
           });
-          dispatch("listar_especies_hospedeiros");
         })
         .catch(e => {
           dispatch("disableLoading");
@@ -64,6 +65,9 @@ const module = {
         .criar({ ...getters.get_especie_hospedeiro, base: localStorage.base })
         .then(() => {
           dispatch("disableLoading");
+          setTimeout(() => {
+            dispatch("listar_especies_hospedeiros");
+          }, 1000);
           commit("set_especie_hospedeiro", {});
           commit("setLinks", []);
           dispatch("createGlobalMessage", {
@@ -71,7 +75,6 @@ const module = {
             message: "Registro Concluído!",
             timeout: 6000
           });
-          dispatch("listar_especies_hospedeiro");
           commit("set_modal_view_especie_hospedeiro", false);
         })
         .catch(e => {

@@ -1,6 +1,6 @@
 <template>
   <layout :style="`background: ${$theme.background}`" :title="$route.name" :options="options">
-    <Filtros />
+    <!-- <Filtros /> -->
 
     <div
       v-if="card"

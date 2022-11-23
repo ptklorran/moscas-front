@@ -32,6 +32,19 @@
             <v-flex class="px-3" xs12>
               <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
                 Família do Hospedeiro
+                <v-btn
+                  @click="abre_modal_view_familiahospedeiro"
+                  rounded
+                  dark
+                  class="mb-1 font-weight-bold fonte"
+                  x-small
+                  color="green"
+                >
+                  Cadastrar
+                  <v-icon size="15" class="ml-1"
+                    >mdi-plus-circle-outline</v-icon
+                  >
+                </v-btn>
               </span>
               <v-autocomplete
                 v-model="get_hospedeiro.familia"
@@ -52,6 +65,19 @@
             <v-flex class="px-3" xs12>
               <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
                 Espécie do hospedeiro
+                <v-btn
+                  @click="abre_modal_view_especie_hospedeiro"
+                  rounded
+                  dark
+                  class="mb-1 font-weight-bold fonte"
+                  x-small
+                  color="green"
+                >
+                  Cadastrar
+                  <v-icon size="15" class="ml-1"
+                    >mdi-plus-circle-outline</v-icon
+                  >
+                </v-btn>
               </span>
               <v-autocomplete
                 v-model="get_hospedeiro.especie"
@@ -94,14 +120,17 @@
         </v-btn>
       </div>
     </v-card>
+    <ModalViewFamiliaHosp />
+    <ModalViewEspecieHosp />
   </v-dialog>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import ModalSendArchive from "../../shared/components/ModalSendArchive.vue";
+import ModalViewFamiliaHosp from "@/apps/4#FamiliaHospedeiros/components/modalView";
+import ModalViewEspecieHosp from "@/apps/2#EspeciesHospedeiro/components/modalView";
 export default {
-  components: { ModalSendArchive },
+  components: { ModalViewFamiliaHosp, ModalViewEspecieHosp },
   computed: {
     ...mapGetters([
       "get_hospedeiro",
@@ -119,7 +148,9 @@ export default {
       "atualizar_hospedeiro",
       "fecha_modal_view_hospedeiro",
       "listar_especies_hospedeiros",
-      "listar_familiahospedeiros"
+      "listar_familiahospedeiros",
+      "abre_modal_view_familiahospedeiro",
+      "abre_modal_view_especie_hospedeiro"
     ]),
     valida_form() {
       if (this.$refs.form.validate()) {
@@ -128,16 +159,6 @@ export default {
           : this.criar_hospedeiro();
       }
     }
-  },
-  created() {
-    this.get_especies_filtros.all = true;
-    this.get_familiahospedeiros_filtros.all = true;
-    this.get_especies_hospedeiros();
-    this.listar_familiahospedeiros();
-  },
-  beforeDestroy() {
-    this.get_especies_filtros.all = false;
-    this.get_familiahospedeiros_filtros.all = false;
   }
 };
 </script>

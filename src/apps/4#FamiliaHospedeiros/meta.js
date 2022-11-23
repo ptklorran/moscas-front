@@ -74,7 +74,9 @@ const module = {
             message: "Registro Concluído!",
             timeout: 6000
           });
-          dispatch("listar_familiahospedeiros");
+          setTimeout(() => {
+            dispatch("listar_familiahospedeiros");
+          }, 1000);
           commit("set_modal_view_familiahospedeiro", false);
         })
         .catch(e => {

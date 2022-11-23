@@ -6,7 +6,9 @@
           <tr>
             <!-- <td class="font-weight-bold"> </td> -->
             <td class="font-weight-bold">#ID</td>
-            <td class="font-weight-bold">NOME</td>
+            <td class="font-weight-bold">NOME C.</td>
+            <td class="font-weight-bold">FAMÍLIA</td>
+            <td class="font-weight-bold">ESPÉCIE</td>
             <td class="font-weight-bold"></td>
           </tr>
         </thead>
@@ -27,6 +29,12 @@
               {{ item.id_hospedeiro }}
             </td>
             <td @click="abre_modal_view_hospedeiro(item)">{{ item.nome }}</td>
+            <td @click="abre_modal_view_hospedeiro(item)">
+              {{ item.familia.nome || "-" }}
+            </td>
+            <td @click="abre_modal_view_hospedeiro(item)">
+              {{ item.especie.nome || "-" }}
+            </td>
             <td style="width: 10px">
               <v-btn
                 @click="
