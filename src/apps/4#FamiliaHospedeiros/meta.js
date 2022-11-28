@@ -50,6 +50,7 @@ const module = {
             message: "Atualização Concluída!",
             timeout: 6000
           });
+          commit("set_modal_view_familiahospedeiro", false);
           dispatch("listar_familiahospedeiros");
         })
         .catch(e => {
@@ -76,7 +77,7 @@ const module = {
           });
           setTimeout(() => {
             dispatch("listar_familiahospedeiros");
-          }, 1000);
+          }, 3000);
           commit("set_modal_view_familiahospedeiro", false);
         })
         .catch(e => {

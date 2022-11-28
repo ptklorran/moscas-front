@@ -44,6 +44,7 @@ const module = {
             message: "Atualização Concluída!",
             timeout: 6000
           });
+          commit("set_modal_view_ocorrencia", false);
           dispatch("listar_ocorrencias");
         })
         .catch(e => {
@@ -68,7 +69,9 @@ const module = {
             message: "Registro Concluído!",
             timeout: 6000
           });
-          dispatch("listar_ocorrencias");
+          setTimeout(() => {
+            dispatch("listar_ocorrencias");
+          }, 300);
           commit("set_modal_view_ocorrencia", false);
         })
         .catch(e => {
@@ -128,6 +131,13 @@ const module = {
       if (payload) {
         commit("set_ocorrencia", payload);
         commit("setLinks", payload.imagens);
+      } else {
+        commit("set_ocorrencia", {
+          latitude: {
+          },
+          longitude: {
+          }
+        });
       }
       commit("set_modal_view_ocorrencia", true);
     },
@@ -150,7 +160,20 @@ const module = {
     }
   },
   state: {
-    ocorrencia: {},
+    ocorrencia: {
+      latitude: {
+        d: "",
+        g: "",
+        m: "",
+        s: ""
+      },
+      longitude: {
+        d: "",
+        g: "",
+        m: "",
+        s: ""
+      }
+    },
     ocorrencias: {
       docs: [],
       page: 1,

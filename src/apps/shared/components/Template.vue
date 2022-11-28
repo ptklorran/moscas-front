@@ -329,7 +329,7 @@ export default {
         //   group: false
         // },
         {
-          title: "Ocorrência",
+          title: "Registro de Ocorrência",
           icon: "mdi-bug-check-outline",
           route: "/ocorrencias",
           group: false
@@ -347,33 +347,33 @@ export default {
           group: false
         },
         {
-          title: "Espécies - Hospedeiro",
-          icon: "mdi-forest",
-          route: "/especie-hospedeiro",
-          group: false
-        },
-        {
           title: "Famílias - Hospedeiros",
           icon: "mdi-family-tree",
           route: "/familiahospedeiros",
           group: false
         },
         {
-          title: "Hospedeiros",
-          icon: "mdi-fruit-pear",
-          route: "/hospedeiros",
+          title: "Espécies - Hospedeiros",
+          icon: "mdi-forest",
+          route: "/especie-hospedeiro",
           group: false
         },
-        {
-          title: "Colaboradores",
-          icon: "mdi-account-circle",
-          route: "/funcionarios",
-          group: false
-        },
+        // {
+        //   title: "Hospedeiros",
+        //   icon: "mdi-fruit-pear",
+        //   route: "/hospedeiros",
+        //   group: false
+        // },
         {
           title: "Bases",
           icon: "mdi-shield-bug-outline",
           route: "/bases",
+          group: false
+        },
+        {
+          title: "Acessos",
+          icon: "mdi-lock-outline",
+          route: "/funcionarios",
           group: false
         }
         // {

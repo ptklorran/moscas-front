@@ -7,6 +7,7 @@
             <!-- <td class="font-weight-bold"> </td> -->
             <td class="font-weight-bold">#ID</td>
             <td class="font-weight-bold">NOME</td>
+            <td class="font-weight-bold">GÊNERO</td>
             <td class="font-weight-bold"></td>
           </tr>
         </thead>
@@ -28,6 +29,9 @@
             </td>
             <td @click="abre_modal_view_especie_hospedeiro(item)">
               {{ item.nome }}
+            </td>
+            <td @click="abre_modal_view_especie_hospedeiro(item)">
+              {{ item.genero }}
             </td>
             <td style="width: 10px">
               <v-btn

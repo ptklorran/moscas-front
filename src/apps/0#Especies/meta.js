@@ -44,7 +44,10 @@ const module = {
             message: "Atualização Concluída!",
             timeout: 6000
           });
-          dispatch("listar_especies");
+          commit("set_modal_view_especie", false);
+          setTimeout(() => {
+            dispatch("listar_especies");
+          }, 300);
         })
         .catch(e => {
           dispatch("disableLoading");

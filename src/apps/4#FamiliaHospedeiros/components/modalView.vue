@@ -16,7 +16,11 @@
           Família dos Hospedeiros
         </span>
         <div class="expande-horizontal"></div>
-        <v-btn class="elevation-3" icon @click="fecha_modal_view_familiahospedeiro">
+        <v-btn
+          class="elevation-3"
+          icon
+          @click="fecha_modal_view_familiahospedeiro"
+        >
           <v-icon color="red">
             mdi-close
           </v-icon>
@@ -42,7 +46,6 @@
                 clearable
                 :color="$theme.primary"
                 :rules="[v => !!v || 'Preencha este campo']"
-                label="ex: Anacardiaceae"
               ></v-text-field>
             </v-flex>
           </v-form>
@@ -66,7 +69,6 @@ export default {
   computed: {
     ...mapGetters([
       "get_familiahospedeiro",
-      "getProfessores",
       "get_modal_view_familiahospedeiro",
       "getLoggedUser"
     ])
@@ -75,17 +77,15 @@ export default {
     ...mapActions([
       "criar_familiahospedeiro",
       "atualizar_familiahospedeiro",
-      "listarProfessores",
       "fecha_modal_view_familiahospedeiro"
     ]),
     valida_form() {
       if (this.$refs.form.validate()) {
-        this.get_familiahospedeiro._id ? this.atualizar_familiahospedeiro() : this.criar_familiahospedeiro();
+        this.get_familiahospedeiro._id
+          ? this.atualizar_familiahospedeiro()
+          : this.criar_familiahospedeiro();
       }
     }
-  },
-  created() {
-    this.listarProfessores();
   }
 };
 </script>

@@ -41,7 +41,9 @@
                   color="green"
                 >
                   Cadastrar
-                  <v-icon size="15" class="ml-1">mdi-plus-circle-outline</v-icon>
+                  <v-icon size="15" class="ml-1"
+                    >mdi-plus-circle-outline</v-icon
+                  >
                 </v-btn>
               </span>
               <v-autocomplete
@@ -62,9 +64,9 @@
 
             <v-flex class="px-3" xs12>
               <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
-                Hospedeiro
+                Família Hospedeiro
                 <v-btn
-                  @click="abre_modal_view_hospedeiro"
+                  @click="abre_modal_view_familiahospedeiro"
                   rounded
                   dark
                   class="mb-1 font-weight-bold fonte"
@@ -72,17 +74,19 @@
                   color="green"
                 >
                   Cadastrar
-                  <v-icon size="15" class="ml-1">mdi-plus-circle-outline</v-icon>
+                  <v-icon size="15" class="ml-1"
+                    >mdi-plus-circle-outline</v-icon
+                  >
                 </v-btn>
               </span>
               <v-autocomplete
-                v-model="get_ocorrencia.hospedeiro"
+                v-model="get_ocorrencia.familia_hospedeiro"
                 dense
                 solo
                 flat
                 outlined
                 clearable
-                :items="get_hospedeiros.docs"
+                :items="get_familiahospedeiros.docs"
                 item-text="nome"
                 return-object
                 :color="$theme.primary"
@@ -91,38 +95,37 @@
               ></v-autocomplete>
             </v-flex>
 
-            <v-flex xs12>
-              <div class="expande-horizontal wrap">
-                <v-flex class="px-3" md6>
-                  <span :style="`color: ${$theme.primary}`" class="fonte"
-                    >Latitude</span
+            <v-flex class="px-3" xs12>
+              <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
+                Espécie Hospedeiro
+                <v-btn
+                  @click="abre_modal_view_especie_hospedeiro"
+                  rounded
+                  dark
+                  class="mb-1 font-weight-bold fonte"
+                  x-small
+                  color="green"
+                >
+                  Cadastrar
+                  <v-icon size="15" class="ml-1"
+                    >mdi-plus-circle-outline</v-icon
                   >
-                  <v-text-field
-                    label="Latitude"
-                    :color="$theme.primary"
-                    v-model="get_ocorrencia.latitude"
-                    solo
-                    flat
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-flex>
-
-                <v-flex class="px-3" md6>
-                  <span :style="`color: ${$theme.primary}`" class="fonte"
-                    >Longitude</span
-                  >
-                  <v-text-field
-                    label="Latitude"
-                    :color="$theme.primary"
-                    v-model="get_ocorrencia.longitude"
-                    solo
-                    flat
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-flex>
-              </div>
+                </v-btn>
+              </span>
+              <v-autocomplete
+                v-model="get_ocorrencia.especie_hospedeiro"
+                dense
+                solo
+                flat
+                outlined
+                clearable
+                :items="get_especies_hospedeiros.docs"
+                item-text="nome"
+                return-object
+                :color="$theme.primary"
+                :rules="[v => !!v || 'Preencha este campo']"
+                label="ex: "
+              ></v-autocomplete>
             </v-flex>
 
             <div class="expande-horizontal wrap">
@@ -155,39 +158,147 @@
                 ></v-text-field>
               </v-flex>
             </div>
+            <v-flex xs12>
+              <div class="expande-horizontal wrap">
+                <v-flex class="px-3" md5>
+                  <span :style="`color: ${$theme.primary}`" class="fonte"
+                    >Latitude</span
+                  >
+                  <div class="expande-horizontal">
+                    <v-select
+                      type="number"
+                      :items="['N', 'S']"
+                      v-model="get_ocorrencia.latitude.direcao"
+                    ></v-select>
+                    <v-text-field
+                      type="number"
+                      v-mask="['##']"
+                      prefix="G:"
+                      v-model="get_ocorrencia.latitude.grau"
+                    ></v-text-field>
+                    <v-text-field
+                      type="number"
+                      prefix="M:"
+                      v-model="get_ocorrencia.latitude.minuto"
+                    ></v-text-field>
+                    <v-text-field
+                      type="number"
+                      prefix="S"
+                      v-model="get_ocorrencia.latitude.segundo"
+                    ></v-text-field>
+                  </div>
+                </v-flex>
+                <v-flex class="px-3" md5>
+                  <span :style="`color: ${$theme.primary}`" class="fonte"
+                    >Longitude</span
+                  >
+                  <div class="expande-horizontal">
+                    <v-select
+                      type="number"
+                      :items="['W']"
+                      v-model="get_ocorrencia.longitude.direcao"
+                    ></v-select>
+                    <v-text-field
+                      type="number"
+                      v-mask="['##']"
+                      prefix="G:"
+                      v-model="get_ocorrencia.longitude.grau"
+                    ></v-text-field>
+                    <v-text-field
+                      type="number"
+                      prefix="M:"
+                      v-model="get_ocorrencia.longitude.minuto"
+                    ></v-text-field>
+                    <v-text-field
+                      type="number"
+                      prefix="S"
+                      v-model="get_ocorrencia.longitude.segundo"
+                    ></v-text-field>
+                  </div>
+                </v-flex>
+                <v-flex xs12 md2>
+                  <v-btn
+                    :color="
+                      get_ocorrencia.tipo_localizacao === 'Real'
+                        ? 'green'
+                        : 'grey'
+                    "
+                    dark
+                    small
+                    class="mb-1"
+                    @click="setTipoLocalizacao('Real')"
+                  >
+                    <v-icon
+                      size="12"
+                      v-if="
+                        get_ocorrencia.tipo_localizacao === 'Real'
+                          ? true
+                          : false
+                      "
+                      color="white"
+                      >mdi-check-circle-outline</v-icon
+                    >
+                    Real
+                  </v-btn>
+                  <v-btn
+                    :color="
+                      get_ocorrencia.tipo_localizacao === 'Estimada'
+                        ? 'green'
+                        : 'grey'
+                    "
+                    dark
+                    small
+                    @click="setTipoLocalizacao('Estimada')"
+                  >
+                    <v-icon
+                      size="12"
+                      v-if="
+                        get_ocorrencia.tipo_localizacao === 'Estimada'
+                          ? true
+                          : false
+                      "
+                      color="white"
+                      >mdi-check-circle-outline</v-icon
+                    >
+                    Estimada
+                  </v-btn>
+                </v-flex>
 
-            <!-- <v-flex class="px-3" xs12>
-              <span :style="`color: ${$theme.primary}`" class="fonte">Indice de Infestação</span>
+                <!-- <v-flex class="px-3" md6>
+                  <span :style="`color: ${$theme.primary}`" class="fonte"
+                    >Longitude</span
+                  >
+                  <v-text-field
+                    label="Latitude"
+                    :color="$theme.primary"
+                    v-model="get_ocorrencia.longitude"
+                    solo
+                    flat
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-flex> -->
+              </div>
+            </v-flex>
+            <v-flex class="px-3" xs12>
+              <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
+                Citação
+              </span>
               <v-text-field
-                label=""
-                :color="$theme.primary"
-                v-model="get_ocorrencia.indice_infestacao"
-                solo
-                flat
+                v-model="get_ocorrencia.citacao"
                 outlined
-                dense
+                clearable
+                :color="$theme.primary"
+                :rules="[v => !!v || 'Preencha este campo']"
+                label="ex: "
               ></v-text-field>
-            </v-flex> -->
-
+            </v-flex>
             <v-flex class="px-3" xs12>
               <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
                 Referência Bibliográfica
               </span>
               <v-textarea
                 v-model="get_ocorrencia.referenciabibliografica"
-                outlined
-                clearable
-                :color="$theme.primary"
-                :rules="[v => !!v || 'Preencha este campo']"
-                label="ex: "
-              ></v-textarea>
-            </v-flex>
-            <v-flex class="px-3" xs12>
-              <span class="py-3 fonte" :style="`color: ${$theme.primary}`">
-                Citação
-              </span>
-              <v-textarea
-                v-model="get_ocorrencia.citacao"
                 outlined
                 clearable
                 :color="$theme.primary"
@@ -206,22 +317,29 @@
       </div>
     </v-card>
     <ModalViewEspecie />
-    <ModalViewHospedeiro />
+    <ModalViewEspecieHospedeiro />
+    <ModalViewFamiliaHospedeiro />
   </v-dialog>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import ModalViewEspecie from "@/apps/0#Especies/components/modalView";
-import ModalViewHospedeiro from "@/apps/3#Hospedeiro/components/modalView";
+import ModalViewEspecieHospedeiro from "@/apps/2#EspeciesHospedeiro/components/modalView";
+import ModalViewFamiliaHospedeiro from "@/apps/4#FamiliaHospedeiros/components/modalView";
 export default {
-  components: { ModalViewEspecie, ModalViewHospedeiro },
+  components: {
+    ModalViewEspecie,
+    ModalViewEspecieHospedeiro,
+    ModalViewFamiliaHospedeiro
+  },
   computed: {
     ...mapGetters([
       "get_ocorrencia",
       "get_especies",
+      "get_familiahospedeiros",
+      "get_especies_hospedeiros",
       "get_especies_filtros",
-      "get_hospedeiros",
       "get_hospedeiros_filtros",
       "get_modal_view_ocorrencia",
       "getLoggedUser"
@@ -231,11 +349,13 @@ export default {
     ...mapActions([
       "criar_ocorrencia",
       "atualizar_ocorrencia",
-      "listar_hospedeiros",
       "listar_especies",
       "fecha_modal_view_ocorrencia",
       "abre_modal_view_especie",
-      "abre_modal_view_hospedeiro",
+      "abre_modal_view_familiahospedeiro",
+      "abre_modal_view_especie_hospedeiro",
+      "listar_especies_hospedeiros",
+      "listar_familiahospedeiros"
     ]),
     valida_form() {
       if (this.$refs.form.validate()) {
@@ -243,17 +363,16 @@ export default {
           ? this.atualizar_ocorrencia()
           : this.criar_ocorrencia();
       }
+    },
+    setTipoLocalizacao(val) {
+      this.get_ocorrencia.tipo_localizacao = val;
+      this.$forceUpdate();
     }
   },
   created() {
-    this.get_hospedeiros_filtros.all = true;
-    this.get_especies_filtros.all = true;
-    this.listar_hospedeiros();
     this.listar_especies();
-  },
-  beforeDestroy() {
-    this.get_hospedeiros_filtros.all = false;
-    this.get_especies_filtros.all = false;
+    this.listar_familiahospedeiros();
+    this.listar_especies_hospedeiros();
   }
 };
 </script>

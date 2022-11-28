@@ -2,7 +2,7 @@ import { http } from "@/apps/shared/baseService/config";
 
 const base = {
   rota: "funcionarios",
-  nome: "Colaboradores"
+  nome: "Acessos"
 };
 
 export const service = {

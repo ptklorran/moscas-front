@@ -8,7 +8,7 @@
             <td class="font-weight-bold">#ID</td>
             <td class="font-weight-bold">NOME</td>
             <td class="font-weight-bold">EMAIL</td>
-            <td class="font-weight-bold">CPF</td>
+            <!-- <td class="font-weight-bold">CPF</td> -->
           </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@
             </td>
             <td @click="abre_modal_view_funcionario(item)">{{ item.nome }}</td>
             <td @click="abre_modal_view_funcionario(item)">{{ item.email }}</td>
-            <td @click="abre_modal_view_funcionario(item)">{{ item.cpf }}</td>
+            <!-- <td @click="abre_modal_view_funcionario(item)">{{ item.cpf }}</td> -->
           </tr>
         </tbody>
       </template>

@@ -46,7 +46,6 @@
                 clearable
                 :color="$theme.primary"
                 :rules="[v => !!v || 'Preencha este campo']"
-                label="ex: Anastrepha amazonensis Norrbom & Korytkowski"
               ></v-text-field>
             </v-flex>
             <v-flex class="px-3" xs12>
@@ -57,6 +56,7 @@
                 v-model="get_especie_hospedeiro.genero"
                 dense
                 solo
+                readonly
                 flat
                 outlined
                 clearable
@@ -88,6 +88,11 @@ export default {
       "getLoggedUser"
     ])
   },
+  watch: {
+    "get_especie_hospedeiro.nome": val => {
+      this.changeGender(val);
+    }
+  },
   methods: {
     ...mapActions([
       "criar_especie_hospedeiro",
@@ -100,6 +105,10 @@ export default {
           ? this.atualizar_especie_hospedeiro()
           : this.criar_especie_hospedeiro();
       }
+    },
+    changeGender(val) {
+      const gender = val ? val.split(" ")[0] : "";
+      this.get_especie_hospedeiro.genero = gender;
     }
   }
 };

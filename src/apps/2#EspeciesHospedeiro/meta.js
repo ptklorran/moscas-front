@@ -2,7 +2,7 @@ import { http } from "@/apps/shared/baseService/config";
 
 const base = {
   rota: "especies_hospedeiros",
-  nome: "Espécie"
+  nome: "Espécies de Hospedeiros"
 };
 
 export const service = {
@@ -42,13 +42,16 @@ const module = {
         .atualizar({ ...getters.get_especie })
         .then(res => {
           dispatch("disableLoading");
-          dispatch("listar_especies_hospedeiros");
           commit("set_especie_hospedeiro", res.data);
           dispatch("createGlobalMessage", {
             type: "success",
             message: "Atualização Concluída!",
             timeout: 6000
           });
+          commit("set_modal_view_especie_hospedeiro", false);
+          setTimeout(() => {
+            dispatch("listar_especies_hospedeiros");
+          }, 300);
         })
         .catch(e => {
           dispatch("disableLoading");

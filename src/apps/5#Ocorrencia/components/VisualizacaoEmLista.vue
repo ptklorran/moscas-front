@@ -1,16 +1,19 @@
 <template>
   <v-flex class="pa-3" :style="`background: ${$theme.background}`" xs12>
-    <v-simple-table style="border: 1px solid #f2f2f2" dense>
+    <v-simple-table class="fonte" style="border: 1px solid #f2f2f2;">
       <template v-slot:default>
         <thead>
           <tr>
             <!-- <td class="font-weight-bold"> </td> -->
             <td class="font-weight-bold" v-if="!hideDelete">#ID</td>
-            <td class="font-weight-bold">Espécie</td>
-            <td class="font-weight-bold">Hospedeiro</td>
+            <td class="font-weight-bold">Espécie de Inseto</td>
+            <td class="font-weight-bold">Família Hospedeiro</td>
+            <td class="font-weight-bold">Espécie Hospedeiro</td>
+            <td class="font-weight-bold">Estado</td>
+            <td class="font-weight-bold">Município</td>
             <td class="font-weight-bold">Coordenadas</td>
-            <td class="font-weight-bold">Município/Estado</td>
-            <td class="font-weight-bold">Ref Bibliográfica</td>
+            <td class="font-weight-bold">Citação</td>
+            <td class="font-weight-bold">Referência</td>
             <td class="font-weight-bold" v-if="!hideDelete"></td>
           </tr>
         </thead>
@@ -35,14 +38,34 @@
               {{ item.especie.nome }}
             </td>
             <td @click="abre_modal_view_ocorrencia(item)">
-              {{ item.hospedeiro.nome }}
-            </td>
-            <td @click="goToCord(item)">
-              Lat {{ item.latitude }}, Long {{ item.longitude }}
+              {{ item.familia_hospedeiro ? item.familia_hospedeiro.nome : "-" }}
             </td>
             <td @click="abre_modal_view_ocorrencia(item)">
-              {{ item.municipio }} - {{ item.estado }}
+              {{ item.especie_hospedeiro ? item.especie_hospedeiro.nome : "-" }}
             </td>
+            <td @click="abre_modal_view_ocorrencia(item)">
+              {{ item.estado }}
+            </td>
+            <td @click="abre_modal_view_ocorrencia(item)">
+              {{ item.municipio }}
+            </td>
+            <td @click="goToCord(item)">
+              {{ item.latitude.grau }}° {{ item.latitude.minuto }}'
+              {{ item.latitude.segundo }}" {{ item.latitude.direcao }},
+              {{ item.longitude.grau }}° {{ item.longitude.minuto }}'
+              {{ item.longitude.segundo }}" {{ item.longitude.direcao }}
+              <v-btn
+                dark
+                rounded
+                color="orange"
+                class="font-weight-bold"
+                text
+                x-small
+              >
+                {{ item.tipo_localizacao }}
+              </v-btn>
+            </td>
+            <td>{{ item.citacao }}</td>
             <td @click="copyRef(item)">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">

@@ -42,7 +42,6 @@
                 clearable
                 :color="$theme.primary"
                 :rules="[v => !!v || 'Preencha este campo']"
-                label="ex: Anastrepha amazonensis Norrbom & Korytkowski"
               ></v-text-field>
             </v-flex>
 
@@ -58,7 +57,6 @@
                 outlined
                 clearable
                 :color="$theme.primary"
-                :rules="[v => !!v || 'Preencha este campo']"
                 label=""
               ></v-text-field>
             </v-flex>
@@ -81,12 +79,21 @@ export default {
   computed: {
     ...mapGetters(["get_especie", "get_modal_view_especie", "getLoggedUser"])
   },
+  watch: {
+    "get_especie.nome": val => {
+      this.changeEspecie();
+    }
+  },
   methods: {
     ...mapActions([
       "criar_especie",
       "atualizar_especie",
       "fecha_modal_view_especie"
     ]),
+    changeEspecie(val) {
+      const genero = val ? val.split(" ")[0] : "";
+      this.get_especie.genero = genero;
+    },
     valida_form() {
       if (this.$refs.form.validate()) {
         this.get_especie._id ? this.atualizar_especie() : this.criar_especie();

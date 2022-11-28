@@ -164,7 +164,7 @@
               <v-flex xs12 md6>
                 <div class="expande-horizontal column">
                   <img  style="height: 380px; border-radius: 6px;" :src="get_base.img" alt="">
-                  <span> {{ base_lang === 'pt' ? 'Atualizado em' : 'Updated at' }} : {{ $moment(get_base.updated_at).format('YYYY-MM-DD HH:mm') }} </span>
+                  <span> {{ base_lang === 'pt' ? 'Atualizado' : 'Updated at' }} {{ $moment(get_base.updated_at).format('L') }} </span>
                 </div>
               </v-flex>
             </div>
@@ -190,8 +190,8 @@
         <div style="display: flex; height: 50vh">
           <MglMap :interactive="true" :zoom="zoom" :showZoom="true" :center="center" style="background-color: #555" :accessToken="accessToken" :mapStyle.sync="mapStyle">
               <div v-for="item in FilteredOcurrencies" :key="item._id">
-                  <MglMarker :coordinates="[parseFloat(item.longitude || 0), parseFloat(item.latitude || 0)]" color="#F9A825">
-                      <MglPopup showed :coordinates="[parseFloat(item.longitude || 0), parseFloat(item.latitude || 0)]" anchor="top">
+                  <MglMarker :coordinates="[(converteCord(item.longitude) || 0), converteCord(item.latitude || 0)]" color="#F9A825">
+                      <MglPopup showed :coordinates="[converteCord(item.longitude || 0), converteCord(item.latitude || 0)]" anchor="top">
                           <div class="bg">
                               <div class="expande-horizontal">
                                 <v-flex xs3>
@@ -420,7 +420,20 @@ export default {
       this.base_lang = lang
     },
     goToCord(item) {
-      this.center = [item.longitude, item.latitude]
+      this.center = [this.converteCord(item.longitude), this.converteCord(item.latitude)]
+    },
+    converteCord(item) {
+      const directionTypes = {
+        'N': true,
+        'S': false,
+        'W': false,
+      }
+      const degresIsPositive = directionTypes[item.direcao]
+      const degres = parseInt(item.grau)
+      const minutes = parseFloat(item.minuto) / 60
+      const seconds = parseFloat(item.segundo) / 3600
+      const sum = degres+minutes+seconds
+      return parseFloat(`${degresIsPositive ? '' : '-' }${sum}`)
     },
     selectBase(base) {
       localStorage.base = base._id;

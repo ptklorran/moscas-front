@@ -69,6 +69,7 @@ const module = {
             message: "Atualização Concluída!",
             timeout: 6000
           });
+          commit("set_modal_view_base", false);
           dispatch("listar_bases");
         })
         .catch(e => {
