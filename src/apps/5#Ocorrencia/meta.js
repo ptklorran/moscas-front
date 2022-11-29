@@ -133,16 +133,17 @@ const module = {
         commit("setLinks", payload.imagens);
       } else {
         commit("set_ocorrencia", {
-          latitude: {
-          },
-          longitude: {
-          }
+          latitude: {},
+          longitude: {}
         });
       }
       commit("set_modal_view_ocorrencia", true);
     },
     fecha_modal_view_ocorrencia: ({ commit }) => {
-      commit("set_ocorrencia", {});
+      commit("set_ocorrencia", {
+        latitude: {},
+        longitude: {}
+      });
       commit("setLinks", []);
       commit("set_modal_view_ocorrencia", false);
     },
@@ -161,18 +162,8 @@ const module = {
   },
   state: {
     ocorrencia: {
-      latitude: {
-        d: "",
-        g: "",
-        m: "",
-        s: ""
-      },
-      longitude: {
-        d: "",
-        g: "",
-        m: "",
-        s: ""
-      }
+      latitude: {},
+      longitude: {}
     },
     ocorrencias: {
       docs: [],

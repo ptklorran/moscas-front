@@ -35,7 +35,7 @@
               {{ item.id_ocorrencia }}
             </td>
             <td @click="abre_modal_view_ocorrencia(item)">
-              {{ item.especie.nome }}
+              {{ item.especie ? item.especie.nome : "-" }}
             </td>
             <td @click="abre_modal_view_ocorrencia(item)">
               {{ item.familia_hospedeiro ? item.familia_hospedeiro.nome : "-" }}
@@ -50,10 +50,14 @@
               {{ item.municipio }}
             </td>
             <td @click="goToCord(item)">
-              {{ item.latitude.grau }}° {{ item.latitude.minuto }}'
-              {{ item.latitude.segundo }}" {{ item.latitude.direcao }},
-              {{ item.longitude.grau }}° {{ item.longitude.minuto }}'
-              {{ item.longitude.segundo }}" {{ item.longitude.direcao }}
+              {{ item.latitude && item.latitude.grau ? item.latitude.grau : "" }}°
+              {{ item.latitude && item.latitude.minuto ? item.latitude.minuto : "" }}'
+              {{ item.latitude && item.latitude.segundo ? item.latitude.segundo : "" }}"
+              {{ item.latitude && item.latitude.direcao ? item.latitude.direcao : "" }},
+              {{ item.longitude && item.longitude.grau ? item.longitude.grau : "" }}°
+              {{ item.longitude && item.longitude.minuto ? item.longitude.minuto : "" }}'
+              {{ item.longitude && item.longitude.segundo ? item.longitude.segundo : "" }}"
+              {{ item.longitude && item.longitude.direcao ? item.longitude.direcao : "" }}
               <v-btn
                 dark
                 rounded
