@@ -38,13 +38,13 @@ const module = {
         .atualizar({ ...getters.get_ocorrencia, imagens: getters.getLinks })
         .then(res => {
           dispatch("disableLoading");
-          commit("set_ocorrencia", res.data);
+          dispatch("fecha_modal_view_ocorrencia");
+          // commit("set_ocorrencia", res.data);
           dispatch("createGlobalMessage", {
             type: "success",
             message: "Atualização Concluída!",
             timeout: 6000
           });
-          commit("set_modal_view_ocorrencia", false);
           dispatch("listar_ocorrencias");
         })
         .catch(e => {
@@ -69,10 +69,10 @@ const module = {
             message: "Registro Concluído!",
             timeout: 6000
           });
+          dispatch("fecha_modal_view_ocorrencia");
           setTimeout(() => {
             dispatch("listar_ocorrencias");
           }, 300);
-          commit("set_modal_view_ocorrencia", false);
         })
         .catch(e => {
           dispatch("disableLoading");
