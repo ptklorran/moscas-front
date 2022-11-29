@@ -461,9 +461,9 @@ export default {
       this.listar_bases(this.$route.query.b);
     } else {
       const sub = document.location.hostname.split('.')
-      console.log("sub", sub)
       if(sub.length === 4) {
         this.$router.push(`/?b=${sub[0]}`)
+        this.listar_bases(sub[0]);
       } else {
         this.listar_bases(false);
         this.show = "select_base"
