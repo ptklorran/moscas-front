@@ -457,21 +457,13 @@ export default {
     }, 1000);
   },
   created() {
-    if (this.$route.query.b) {
-      this.listar_bases(this.$route.query.b);
+    const sub = document.location.hostname.split('.')
+    if(sub.length === 4) {
+      this.listar_bases(sub[0]);
     } else {
-      const sub = document.location.hostname.split('.')
-      if(sub.length === 4) {
-        this.$router.push(`/?b=${sub[0]}`)
-        this.listar_bases(sub[0]);
-      } else {
-        this.listar_bases(false);
-        this.show = "select_base"
-      }
+      this.listar_bases(false);
+      this.show = "select_base"
     }
-    // this.listar_ocorrencias();
-    // this.listar_familiahospedeiros();
-    // this.listar_hospedeiros();
   }
 }
 </script>
