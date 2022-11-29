@@ -460,8 +460,13 @@ export default {
     if (this.$route.query.b) {
       this.listar_bases(this.$route.query.b);
     } else {
-      this.listar_bases(false);
-      this.show = "select_base"
+      const sub = document.location.hostname.split('.')
+      if(sub.length === 4) {
+        this.$router.push(`/?b=${sub[0]}`)
+      } else {
+        this.listar_bases(false);
+        this.show = "select_base"
+      }
     }
     // this.listar_ocorrencias();
     // this.listar_familiahospedeiros();

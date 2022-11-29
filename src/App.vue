@@ -17,11 +17,6 @@ export default {
     ModalConfirmAction,
     ModalLoading,
     ModalGlobalMessage,
-  },
-  created() {
-    console.log("router", this.$router);
-    console.log("route", this.$route);
-    console.log("doc loca", document.location);
   }
 };
 </script>
