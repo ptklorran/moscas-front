@@ -172,7 +172,7 @@ const module = {
     },
     ocorrencias_marcados: [],
     ocorrencias_filtros: {
-      limitPerPage: 1000,
+      limitPerPage: 2000,
       page: 1,
       dataInicio: "",
       dataFim: ""
