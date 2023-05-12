@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const http = axios.create({
   // baseURL: process.env.VUE_APP_URL_API,
-  baseURL: "http://localhost:3000",
-  // baseURL: "http://200.129.165.106/bases/",
+  // baseURL: "http://localhost:3000", 
+  baseURL: "http://200.129.165.106/bases/",
   // baseURL: "https://backend.sysrocket.com.br/embrapa/",
   headers: {
     "Content-Type": "application/json",
