@@ -152,8 +152,11 @@
                     </v-flex>
                   </div>
                   <div class="expande-horizontal pb-2">
-                    <v-flex xs6>
-                      <v-btn @click="show='view'" dark class="fonte font-weight-bold" color="green" small outlined> {{ base_lang === 'pt' ? 'Buscar' : 'Search' }} <v-icon size="18" class="mt-1 ml-2">mdi-magnify</v-icon> </v-btn>
+                    <v-flex xs6 class="pl-0">
+                      <div class="expande-horizontal centraliza px-5">
+                        <v-btn @click="show='view'" dark class="fonte font-weight-bold" color="green" small outlined> {{ base_lang === 'pt' ? 'Ver resultados' : 'See results' }} <v-icon size="18" class="mt-1 ml-2">mdi-magnify</v-icon> </v-btn>
+                        <v-btn text @click="clearFilters" dark class="fonte font-weight-bold ml-1" color="green" small outlined> {{ base_lang === 'pt' ? 'Limpar filtros' : 'Clear filters' }} </v-btn>
+                      </div>
                     </v-flex>
                   </div>
                   <div class="expande-horizontal centraliza">
@@ -212,7 +215,7 @@
         </div>
 			<div class="expande-horizontal wrap" style="height: 70vh;">
 				<div class="expande-horizontal wrap">
-          <VisualizacaoEmLista :goToCord="goToCord" :hideDelete="true" v-show="get_ocorrencias.docs.length > 0" />
+          <VisualizacaoEmLista :FilteredOcurrencies="FilteredOcurrencies" :goToCord="goToCord" :hideDelete="true" v-show="get_ocorrencias.docs.length > 0" />
         </div>
 
         <ListagemVazia v-show="get_ocorrencias.docs.length === 0" />
@@ -418,6 +421,9 @@ export default {
     ]),
     selectLang(lang) {
       this.base_lang = lang
+    },
+    clearFilters() {
+      this.filter = {};
     },
     goToCord(item) {
       this.center = [this.converteCord(item.longitude), this.converteCord(item.latitude)]

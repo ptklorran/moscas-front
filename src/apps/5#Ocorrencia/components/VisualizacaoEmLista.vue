@@ -22,7 +22,7 @@
             :style="
               `cursor: pointer; background: ${i % 2 === 0 ? '#f2f2f2' : '#fff'}`
             "
-            v-for="(item, i) in get_ocorrencias.docs"
+            v-for="(item, i) in FilteredOcurrencies"
             :key="item.id"
           >
             <!-- <td style="width: 10px"> <v-checkbox :color="$theme.primary" @click="setMarcado($event, item)" dense hide-details></v-checkbox> </td> -->
@@ -110,7 +110,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  props: ["hideDelete", "goToCord"],
+  props: ["hideDelete", "goToCord", "FilteredOcurrencies"],
   data() {
     return {
       toCopy: ""
