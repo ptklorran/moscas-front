@@ -110,7 +110,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  props: ["hideDelete", "goToCord", "FilteredOcurrencies"],
+  props: ["hideDelete", "goToCord", "FilteredOcurrencies", "ext"],
   data() {
     return {
       toCopy: ""
