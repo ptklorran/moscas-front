@@ -7,6 +7,21 @@
         background-color="#e5e5e5"
         small
         flat
+        label="Pesquise pelo id"
+        v-model="get_ocorrencias_filtros.id_ocorrencia"
+        clearable
+        hide-details
+        :color="$theme.primary"
+        @input="debounceSearch"
+      ></v-text-field>
+    </v-flex>
+    <!-- <v-flex xs12 md3 class="pr-2">
+      <v-text-field
+        dense
+        solo
+        background-color="#e5e5e5"
+        small
+        flat
         label="Pesquise pelo nome"
         v-model="get_ocorrencias_filtros.nome"
         clearable
@@ -14,7 +29,7 @@
         :color="$theme.primary"
         @input="debounceSearch"
       ></v-text-field>
-    </v-flex>
+    </v-flex> -->
 
     <!-- <v-flex xs12 md3 class="pr-2">
       <v-text-field
