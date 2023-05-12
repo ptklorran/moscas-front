@@ -40,7 +40,7 @@
         <div class="pa-3 expande-horizontal centraliza wrap">
           <v-flex class="pa-2" :key="base._id" v-for="base in get_bases.docs" xs12 md3>
             <v-card @click="selectBase(base)" class="fonte">
-              <v-img style="border-radius: 3px;" height="200" contain :src="base.img"></v-img>
+              <v-img contain style="border-radius: 3px;" height="200" :src="base.img"></v-img>
               <v-divider></v-divider>
               <v-list class="pa-0">
                 <v-list-item class="pa-2 ma-0">
@@ -166,7 +166,7 @@
               </v-flex>
               <v-flex xs12 md6>
                 <div class="expande-horizontal column">
-                  <img  style="height: 380px; border-radius: 6px;" :src="get_base.img" alt="">
+                  <v-img contain  style="height: 380px; border-radius: 6px;" :src="get_base.img" alt=""> </v-img>
                   <span> {{ base_lang === 'pt' ? 'Atualizado' : 'Updated at' }} {{ $moment(get_base.updated_at).format('L') }} </span>
                 </div>
               </v-flex>
