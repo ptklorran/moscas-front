@@ -215,7 +215,7 @@
         </div>
 			<div class="expande-horizontal wrap" style="height: 70vh;">
 				<div class="expande-horizontal wrap">
-          <VisualizacaoEmLista :FilteredOcurrencies="FilteredOcurrencies" :goToCord="goToCord" :hideDelete="true" v-show="get_ocorrencias.docs.length > 0" />
+          <VisualizacaoEmLista :FilteredOcurrencies="FilteredOcurrencies" :ext="true" :goToCord="goToCord" :hideDelete="true" v-show="get_ocorrencias.docs.length > 0" />
         </div>
 
         <ListagemVazia v-show="get_ocorrencias.docs.length === 0" />

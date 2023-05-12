@@ -64,7 +64,7 @@
 <script>
 import Filtros from "../components/Filtros.vue";
 import VisualizacaoEmCard from "../components/VisualizacaoEmCard.vue";
-import VisualizacaoEmLista from "../components/VisualizacaoEmLista.vue";
+import VisualizacaoEmLista from "../components/VisualizacaoEmListaInternal.vue";
 import Paginacao from "../components/Paginacao.vue";
 import ListagemVazia from "../components/ListagemVazia.vue";
 import ModalView from "../components/modalView.vue";
