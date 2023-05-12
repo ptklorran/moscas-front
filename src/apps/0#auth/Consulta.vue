@@ -397,15 +397,15 @@ export default {
             splash: true,
             base_lang: 'pt',
             accessToken: 'pk.eyJ1IjoicHRrbG9ycmFuIiwiYSI6ImNrM2JzbXRqZTBnZjkzbnFlM3VyYTVzazkifQ.kgDrdfqGfd6XTV5DXfeSwg', // your access token. Needed if you using Mapbox maps
-            // mapStyle:  'mapbox://styles/mapbox/satellite-streets-v12', // your map style
-            mapStyle:  'mapbox://styles/mapbox/light-v10', // your map style
-            pesquisa: '',
-            options: [],
+            mapStyle:  'mapbox://styles/mapbox/light-v10',
             mapbox: Mapbox,
             coordinates: [],
             locations: [],
-            center: [-51.153764, 0.004270],
             zoom: 6,
+            center: [-51.153764, 0.004270],
+            options: [],
+            // mapStyle:  'mapbox://styles/mapbox/satellite-streets-v12', // your map style
+            pesquisa: '',
             filter: {}
         }
     },

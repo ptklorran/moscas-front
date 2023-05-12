@@ -359,9 +359,14 @@ export default {
     ]),
     valida_form() {
       if (this.$refs.form.validate()) {
-        this.get_ocorrencia._id
-          ? this.atualizar_ocorrencia()
-          : this.criar_ocorrencia();
+        if (this.get_ocorrencia.tipo_localizacao === undefined) {
+          alert("Informe se a localização é real ou aproximada!");
+          return;
+        } else {
+          this.get_ocorrencia._id
+            ? this.atualizar_ocorrencia()
+            : this.criar_ocorrencia();
+        }
       }
     },
     setTipoLocalizacao(val) {

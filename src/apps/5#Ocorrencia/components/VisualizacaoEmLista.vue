@@ -1,11 +1,11 @@
 <template>
   <v-flex class="pa-3" :style="`background: ${$theme.background}`" xs12>
-    <v-simple-table class="fonte" style="border: 1px solid #f2f2f2;">
+    <v-simple-table class="fonte" style="max-height: 80vh; overflow: auto; border: 1px solid #f2f2f2;">
       <template v-slot:default>
         <thead>
           <tr>
             <!-- <td class="font-weight-bold"> </td> -->
-            <td class="font-weight-bold" v-if="!hideDelete">#ID</td>
+            <td class="font-weight-bold">#ID</td>
             <td class="font-weight-bold">Espécie de Inseto</td>
             <td class="font-weight-bold">Família Hospedeiro</td>
             <td class="font-weight-bold">Espécie Hospedeiro</td>
@@ -27,7 +27,6 @@
           >
             <!-- <td style="width: 10px"> <v-checkbox :color="$theme.primary" @click="setMarcado($event, item)" dense hide-details></v-checkbox> </td> -->
             <td
-              v-if="!hideDelete"
               style="width: 10px"
               @click="abre_modal_view_ocorrencia(item)"
               class="font-weight-bold fonte"
@@ -118,7 +117,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["get_ocorrencias"])
+    ...mapGetters(["get_ocorrencias"]),
+    // getFilteredOcurrencie() {
+    //   if (this.search) {
+    //     this.search
+    //   } else {
+
+    //   }
+    // }
   },
   methods: {
     ...mapActions([

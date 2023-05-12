@@ -89,7 +89,7 @@ const module = {
           });
         });
     },
-    excluir_especie_hospedeiro: ({ dispatch, getters }, payload) => {
+    excluir_especie_hospedeiro: ({ dispatch }, payload) => {
       dispatch("enableLoading");
       service
         .excluir(payload)
@@ -100,7 +100,9 @@ const module = {
             message: "Exclusão Concluída!",
             timeout: 6000
           });
-          dispatch("listar_especies_hospedeiro");
+          setTimeout(() => {
+            dispatch("listar_especies_hospedeiros");
+          }, 300);
         })
         .catch(e => {
           dispatch("disableLoading");

@@ -56,7 +56,6 @@
                 v-model="get_especie_hospedeiro.genero"
                 dense
                 solo
-                readonly
                 flat
                 outlined
                 clearable

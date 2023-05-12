@@ -39,7 +39,7 @@
                   createConfirmAction({
                     message: 'Deseja remover?',
                     icon: 'mdi-warning',
-                    action: 'excluir_especies_hospedeiro',
+                    action: 'excluir_especie_hospedeiro',
                     action_value: item
                   })
                 "

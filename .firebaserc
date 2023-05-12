@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "moscasdafruta"
-  }
+    "default": "moscasdafruta",
+    "embrapa": "cosmos-code"
+  },
+  "targets": {}
 }
